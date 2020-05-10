@@ -1,10 +1,13 @@
 import React from 'react';
+import Layout from '../core/Layout'
 
 const Signup = () => {
-    return (
-        <div>
-            <h2>Signup</h2>
-        </div>
+    return(
+        <Layout
+            title='Signup'
+            description='Signup to Node React E-commerce App'>
+            ...
+        </Layout>
     );
 };
 
