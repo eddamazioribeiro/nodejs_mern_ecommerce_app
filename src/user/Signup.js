@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import Layout from '../core/Layout'
-import {API} from '../config'
+import Layout from '../core/Layout';
+import {signUp} from '../auth';
 
 const Signup = () => {
     const [values, setValues] = useState({
@@ -17,29 +17,7 @@ const Signup = () => {
     const handleChange = name => event => {
         setValues({...values, error: false, [name]: event.target.value})
     }
-
-    const signUp = (user) => {
-        console.log(user);
-
-        return(
-            fetch(`${API}/signup`,{
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(user)
-            })
-            .then(res => {
-                return res.json();
-            })
-            .catch(err => {
-                console.log(err);
-            })
-        );
-    }
-
-
+    
     const clickSubmit = (event) => {
         event.preventDefault();
 
