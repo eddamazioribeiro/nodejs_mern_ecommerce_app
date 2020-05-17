@@ -47,3 +47,19 @@ export const authenticate = (data, next) => {
         next();
     }
 }
+
+export const signOut = (next) => {
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem('jwt');
+
+        next();
+
+        return fetch(`${API}/signlout`, {
+            method: "GET"
+        })
+        .then(response => {
+            console.log('signout', response);
+        })
+        .catch(err => console.log(err));
+    }
+}
