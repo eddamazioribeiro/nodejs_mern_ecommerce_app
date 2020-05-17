@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Redirect} from 'react-router-dom';
 import Layout from '../core/Layout';
-import {signIn} from '../auth';
+import {signIn, authenticate} from '../auth';
 
 const SignIn = () => {
     const [values, setValues] = useState({
@@ -32,13 +32,17 @@ const SignIn = () => {
                         loading: false
                     });
                 } else {
-                    setValues({
-                        ...values,
-                        redirectToReferrer: true,
-                        loading: false
-                    });
+                    authenticate(
+                        data, () => {
+                            setValues({
+                                ...values,
+                                redirectToReferrer: true,
+                                loading: false
+                            });
+                        }
+                    );
                 }
-            }) ;
+            });
     }
 
     const signInForm = () => {
@@ -105,8 +109,8 @@ const SignIn = () => {
 
     return(
         <Layout
-            title='Signup'
-            description='Signup to Node React E-commerce App'
+            title='Signin'
+            description='Signin to Node React E-commerce App'
             className='container col-md-8 offset-mde-2'>
             {showLoading()}
             {showError()}
