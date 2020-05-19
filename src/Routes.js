@@ -4,6 +4,9 @@ import Home from './core/Home';
 import Layout from './core/Layout';
 import Signup from './user/Signup';
 import Signin from './user/Signin';
+import PrivateRoute from './auth/PrivateRoute';
+import Dashboard from './user/UserDashboard';
+
 
 const Routes = () => {
     return(
@@ -16,7 +19,10 @@ const Routes = () => {
                 exact component={Signin}/>
             <Route 
                 path='/signup'
-                exact component={Signup}/>                    
+                exact component={Signup}/>
+            <PrivateRoute 
+                path='/dashboard'
+                exact component={Dashboard}/>                                  
         </BrowserRouter>
     );
 };

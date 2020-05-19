@@ -22,7 +22,7 @@ export const signUp = (user) => {
 
 export const signIn = (user) => {
 
-    return(
+    return(        
         fetch(`${API}/signin`,{
             method: "POST",
             headers: {
@@ -32,6 +32,7 @@ export const signIn = (user) => {
             body: JSON.stringify(user)
         })
         .then(res => {
+            console.log(res.body);
             return res.json();
         })
         .catch(err => {
@@ -54,7 +55,7 @@ export const signOut = (next) => {
 
         next();
 
-        return fetch(`${API}/signlout`, {
+        return fetch(`${API}/signout`, {
             method: "GET"
         })
         .then(response => {
