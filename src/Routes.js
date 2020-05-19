@@ -21,7 +21,7 @@ const Routes = () => {
                 path='/signup'
                 exact component={Signup}/>
             <PrivateRoute 
-                path='/dashboard'
+                path='/user/dashboard'
                 exact component={Dashboard}/>                                  
         </BrowserRouter>
     );
