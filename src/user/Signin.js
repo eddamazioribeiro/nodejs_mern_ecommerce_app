@@ -104,14 +104,21 @@ const SignIn = () => {
         if (redirectToReferrer) {
             if (user && user.role === 1) {
                 return(
-                    <Redirect to="/admin/dashboard"/>
+                    <Redirect to='/admin/dashboard'/>
                 );
             } else {
                 return(
-                    <Redirect to="/user/dashboard"/>
+                    <Redirect to='/user/dashboard'/>
                 );
             }
         }
+        
+        if (isAuthenticated()) {
+            return(
+                <Redirect to='/'/>
+            );
+        }
+
     }
 
     return(
