@@ -118,7 +118,6 @@ const SignIn = () => {
                 <Redirect to='/'/>
             );
         }
-
     }
 
     return(
