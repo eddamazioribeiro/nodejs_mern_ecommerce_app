@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Layout from '../core/Layout';
 import {isAuthenticated} from '../auth';
 import {Link} from 'react-router-dom';
+import {createCategory} from './apiAdmin';
 
 const AddCategory = () => {
     const [name, setName] = useState('');
@@ -19,6 +20,16 @@ const AddCategory = () => {
         e.preventDefault();
         setError('');
         setSuccess(false);
+
+        createCategory(user._id, token, {name})
+        .then((data) => {
+            if (data.error) {
+                setError(true);
+            } else {
+                setError('');
+                setSuccess(true);
+            }
+        });
     }
 
     const newCategoryForm = () => {
@@ -33,6 +44,7 @@ const AddCategory = () => {
                         className='form-control'
                         onChange={handleChange}
                         value={name}
+                        required
                         autoFocus>
                     </input>
                 </div>
@@ -43,12 +55,29 @@ const AddCategory = () => {
         );
     }
 
+    const showResult = () => {
+        if (success) {
+            return(
+                <h3 className='text-success'>
+                    {name} successfully created!
+                </h3>
+            );
+        } else if (error) {
+            return(
+                <h3 className='text-danger'>
+                    Category name already in use!
+                </h3>
+            );  
+        }
+    }
+
     return(
         <Layout
             title='Add a new category'
             description={`Hello, ${user.name}! Ready to add a new category?`}>
             <div className='row'>
                 <div className='col-md-8 offset-md-2'>
+                    {showResult()}
                     {newCategoryForm()}
                 </div>
             </div>
