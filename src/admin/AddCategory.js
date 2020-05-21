@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Layout from '../core/Layout';
 import {isAuthenticated} from '../auth';
 import {Link} from 'react-router-dom';
@@ -8,6 +8,7 @@ const AddCategory = () => {
     const [name, setName] = useState('');
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [showResultMsg, setShowResultMsg] = useState(false);
 
     const {user, token} = isAuthenticated();
 
@@ -20,9 +21,12 @@ const AddCategory = () => {
         e.preventDefault();
         setError('');
         setSuccess(false);
+        setShowResultMsg(false);
 
         createCategory(user._id, token, {name})
         .then((data) => {
+            setShowResultMsg(true);                
+            
             if (data.error) {
                 setError(true);
             } else {
@@ -56,7 +60,11 @@ const AddCategory = () => {
     }
 
     const showResult = () => {
-        if (success) {
+        setTimeout(() => {
+            setShowResultMsg(false);
+        }, 2000);
+
+        if (success) {            
             return(
                 <h3 className='text-success'>
                     {name} successfully created!
@@ -77,7 +85,7 @@ const AddCategory = () => {
             description={`Hello, ${user.name}! Ready to add a new category?`}>
             <div className='row'>
                 <div className='col-md-8 offset-md-2'>
-                    {showResult()}
+                    {showResultMsg ? showResult() : ''}
                     {newCategoryForm()}
                 </div>
             </div>
