@@ -79,6 +79,18 @@ const AddCategory = () => {
         }
     }
 
+    const goBack = () => {
+        return(
+            <div className='mt-5'>
+                <Link
+                    to='/admin/dashboard'
+                    className='text-warning'>
+                        Back to dashboard
+                </Link>
+            </div>
+        );
+    }
+    
     return(
         <Layout
             title='Add a new category'
@@ -87,6 +99,7 @@ const AddCategory = () => {
                 <div className='col-md-8 offset-md-2'>
                     {showResultMsg ? showResult() : ''}
                     {newCategoryForm()}
+                    {goBack()}
                 </div>
             </div>
         </Layout>
