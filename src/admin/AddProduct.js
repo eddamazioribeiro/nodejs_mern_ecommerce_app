@@ -49,13 +49,33 @@ const AddProduct = () => {
 
     const clickSubmit = (e) => {
         e.preventDefault();
+        setValues({...values, error: '', loading: true});
+
+        createProduct(user._id, token, formData)
+        .then(data => {
+            if(data.error) {
+                setValues({...values, error: data.error})
+            } else {
+                setValues({...values,
+                    name: '',
+                    description: '',
+                    price: '',
+                    shipping: '',
+                    quantity: '',
+                    photo: '',
+                    loading: false,
+                    createdProduct: data.name
+                })
+            }
+        })
+        .catch();
     }
     
     const newPostForm = () => {
         return(
             <form
                 className='mb-3'
-                onSubmit={clickSubmit()}>
+                onSubmit={clickSubmit}>
                 <h4>Post photo</h4>
                 <div className= 'form-group'>
                     <label className='btn btn-secondary'>
@@ -107,9 +127,13 @@ const AddProduct = () => {
                         className='form-control'
                         onChange={handleChange('category')}>
                         <option
+                            value='0'>
+                                -- Selecione --
+                        </option>
+                        <option
                             value='5ec5d5c3b7418a169ff7aefc'>
                                 Node.js
-                        </option>                    
+                        </option>                                            
                     </select>
                 </div>
                 <div className='form-group'>
@@ -142,7 +166,10 @@ const AddProduct = () => {
                 </div>
                 <button className='btn btn-outline-primary'>
                     Create
-                </button>                                       
+                </button>
+                <span>
+                    {JSON.stringify(values)}
+                </span>                                      
             </form>            
         );
     }
