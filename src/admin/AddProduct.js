@@ -91,7 +91,7 @@ const AddProduct = () => {
     
     const showResult = () => {
         var msgClass = 'alert ' + (error ? 'alert-danger' : 'alert-info');
-        var result = error ? error : createdProduct;       
+        var result = (error ? error : `Product ${createdProduct} successfully created!`);       
         
         setTimeout(() => {
             setShowResultMsg(false);
@@ -101,7 +101,7 @@ const AddProduct = () => {
             <div
                 className={msgClass}>
                 <h2>
-                    {result} successfully created!
+                    {result}
                 </h2>
             </div>
         );

@@ -60,23 +60,18 @@ const AddCategory = () => {
     }
 
     const showResult = () => {
+        var msgClass = 'text-' + (error ? 'danger' : 'success'); 
+        var result = (error ? 'Category name already in use!' : `Category ${name} successfully created!`); 
+        
         setTimeout(() => {
             setShowResultMsg(false);
-        }, 2000);
-
-        if (success) {            
-            return(
-                <h3 className='text-success'>
-                    {name} successfully created!
-                </h3>
-            );
-        } else if (error) {
-            return(
-                <h3 className='text-danger'>
-                    Category name already in use!
-                </h3>
-            );  
-        }
+        }, 3000);
+          
+        return(
+            <h3 className={msgClass}>
+                {result}
+            </h3>
+        );
     }
 
     const goBack = () => {
