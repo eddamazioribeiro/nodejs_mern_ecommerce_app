@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Layout from '../core/Layout';
 import {isAuthenticated} from '../auth';
 import {Link} from 'react-router-dom';
-import {createProduct} from './apiAdmin';
+import {createProduct, getCategories} from './apiAdmin';
 
 const AddProduct = () => {
     const {user, token} = isAuthenticated();
@@ -37,8 +37,22 @@ const AddProduct = () => {
         formData  
     } = values;
 
+    const [showResultMsg, setShowResultMsg] = useState(false);
+
+    const init = () => {
+        setShowResultMsg(false);
+        getCategories()
+        .then(data => {
+            if (data.error) {
+                setValues({...values, error: data.error});
+            } else {
+                setValues({...values, categories: data, formData: new FormData()});
+            }
+        })
+    }
+
     useEffect(() => {
-        setValues({...values, formData: new FormData()});
+        init();
     }, []);
 
     const handleChange = (name) => (event) => {
@@ -50,9 +64,12 @@ const AddProduct = () => {
     const clickSubmit = (e) => {
         e.preventDefault();
         setValues({...values, error: '', loading: true});
+        setShowResultMsg(false);
 
         createProduct(user._id, token, formData)
         .then(data => {
+            setShowResultMsg(true);
+            
             if(data.error) {
                 setValues({...values, error: data.error})
             } else {
@@ -64,13 +81,44 @@ const AddProduct = () => {
                     quantity: '',
                     photo: '',
                     loading: false,
-                    createdProduct: data.name
+                    createdProduct: data.name,
+                    formData: new FormData()
                 })
             }
         })
         .catch();
     }
     
+    const showResult = () => {
+        var msgClass = 'alert ' + (error ? 'alert-danger' : 'alert-info');
+        var result = error ? error : createdProduct;       
+        
+        setTimeout(() => {
+            setShowResultMsg(false);
+        }, 3000);
+
+        return(
+            <div
+                className={msgClass}>
+                <h2>
+                    {result} successfully created!
+                </h2>
+            </div>
+        );
+    }
+
+    const showLoading = () => {
+        if (loading) {
+            return(
+                <div className='alert alert-success'>
+                    <h2>
+                        Loading...
+                    </h2>
+                </div>
+            );
+        }
+    }
+
     const newPostForm = () => {
         return(
             <form
@@ -127,13 +175,18 @@ const AddProduct = () => {
                         className='form-control'
                         onChange={handleChange('category')}>
                         <option
-                            value='0'>
-                                -- Selecione --
+                            value=''>
+                                -- Please select --
                         </option>
-                        <option
-                            value='5ec5d5c3b7418a169ff7aefc'>
-                                Node.js
-                        </option>                                            
+                        {categories && categories.map((c, i) => {
+                            return(
+                                <option
+                                    key={i}
+                                    value={c._id}>
+                                    {c.name}
+                                </option>
+                            );
+                        })}                                     
                     </select>
                 </div>
                 <div className='form-group'>
@@ -155,6 +208,10 @@ const AddProduct = () => {
                         className='form-control'
                         onChange={handleChange('shipping')}>
                         <option
+                            value=''>
+                                -- Please select --
+                        </option>                        
+                        <option
                             value='0'>
                                 No
                         </option>
@@ -166,10 +223,7 @@ const AddProduct = () => {
                 </div>
                 <button className='btn btn-outline-primary'>
                     Create
-                </button>
-                <span>
-                    {JSON.stringify(values)}
-                </span>                                      
+                </button>                                    
             </form>            
         );
     }
@@ -180,6 +234,8 @@ const AddProduct = () => {
             description={`Hello, ${user.name}! Ready to add a new produto?`}>
             <div className='row'>
                 <div className='col-md-8 offset-md-2'>
+                    {showLoading()}
+                    {showResultMsg ? showResult() : ''}
                     {newPostForm()}
                 </div>
             </div>
