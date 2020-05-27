@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Layout from '../core/Layout';
+import Card from './Card';
 import {getProducts} from './apiCore';
 
 const Home = () => {
@@ -37,9 +38,24 @@ const Home = () => {
     return(
         <Layout
             title='Home Page'
-            description='Node React E-commerce App'>
-            {JSON.stringify(productsBySell)}
-            {JSON.stringify(productsByArrival)}
+            description='Node React E-commerce App'
+            className='container-fluid'>
+            <h2 className='mb-4'>
+                New arrivals
+            </h2>
+            <div className='row'>
+                {productsByArrival.map((product, i) => {
+                    return(<Card key={i} product={product}/>)
+                })}
+            </div>
+            <h2 className='mb-4'>
+                Best Sellers
+            </h2>
+            <div className='row'>
+                {productsBySell.map((product, i) => {
+                    return(<Card key={i} product={product}/>)
+                })}                
+            </div>                    
         </Layout>
     );
 };
