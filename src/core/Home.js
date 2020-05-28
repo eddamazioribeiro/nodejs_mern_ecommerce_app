@@ -8,31 +8,26 @@ const Home = () => {
     const [productsByArrival, setProductsByArrival] = useState([]);
     const [error, setError] = useState(false);
 
-    const loadProductsBySell = () => {
-        getProducts('sold')
+    const loadProductsSortedBy = (sortBy) => {
+        getProducts(sortBy)
         .then(data => {
             if (data.error) {
                 setError(data.error);
             } else {
-                setProductsBySell(data);
-            }
-        })
-    }
-
-    const loadProductsByArrival = () => {
-        getProducts('createdAt')
-        .then(data => {
-            if (data.error) {
-                setError(data.error);
-            } else {
-                setProductsByArrival(data);
+                if (sortBy == 'sold') {
+                    console.log('sold');
+                    setProductsBySell(data);
+                } else {
+                    console.log('arrival');
+                    setProductsByArrival(data);
+                }
             }
         })
     }
 
     useEffect(() => {
-        loadProductsByArrival();
-        loadProductsBySell();
+        loadProductsSortedBy('createdAt');
+        loadProductsSortedBy('sold');
     }, []);
 
     return(
@@ -42,7 +37,7 @@ const Home = () => {
             className='container-fluid'>
             <h2 className='mb-4'>
                 New arrivals
-            </h2>
+            </h2>           
             <div className='row'>
                 {productsByArrival.map((product, i) => {
                     return(<Card key={i} product={product}/>)
@@ -55,7 +50,7 @@ const Home = () => {
                 {productsBySell.map((product, i) => {
                     return(<Card key={i} product={product}/>)
                 })}                
-            </div>                    
+            </div>                  
         </Layout>
     );
 };
