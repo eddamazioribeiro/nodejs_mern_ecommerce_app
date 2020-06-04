@@ -1,15 +1,34 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Checkbox = ({categoties}) => {
+const Checkbox = ({ categoties }) => {
+    const [checked, setChecked] = useState([]);
+
+    const handleToggle = c => () => {
+        const currentCategotyId = checked.indexOf(c);
+        const newCheckedCategoryId = [...checked];
+
+        if (currentCategotyId === -1) {
+            newCheckedCategoryId.push(c);
+        } else {
+            newCheckedCategoryId.splice(currentCategotyId, 1);
+        }
+        
+        console.log(newCheckedCategoryId);
+
+        setChecked(newCheckedCategoryId);
+    }
+
     return categoties.map((c, i) => {
-        return(
+        return (
             <li key={i}
                 className='list-unstyled'>
                 <label
                     className='form-check-label'>
                     <input
+                        onChange={handleToggle(c._id)}
+                        value={checked.indexOf(c._id === -1)}
                         type='checkbox'
-                        className='form-check-input'/>                    
+                        className='form-check-input' />
                     {c.name}
                 </label>
             </li>
