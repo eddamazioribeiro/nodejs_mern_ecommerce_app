@@ -20,7 +20,11 @@ const Shop = () => {
 
     useEffect(() => {
         init();
-    }, [])
+    }, []);
+
+    const handleFilters = (filters, filterBy) => {
+        console.log('SHOP', filters, filterBy);
+    }
 
     return(
         <Layout
@@ -31,7 +35,11 @@ const Shop = () => {
                 <div className="col-4">
                     <h4>Categories</h4>
                     <ul>
-                        <Checkbox categoties={categories}/>
+                        <Checkbox
+                            categoties={categories}
+                            handleFilters={filters => {
+                                handleFilters(filters, 'category')
+                            }}/>
                     </ul>
                 </div>
                 <div className="col-8">
