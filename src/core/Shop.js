@@ -30,7 +30,26 @@ const Shop = () => {
     const handleFilters = (filters, filterBy) => {
         const newFilters = {...myFilters};
         newFilters.filters[filterBy] = filters;
+
+        if (filterBy == 'price') {
+            let priceValues = handlePrice(filters);
+            newFilters.filters[filterBy] = priceValues;
+        }
+
         setMyFilters(newFilters);
+    }
+
+    const handlePrice = value => {
+        const data = prices;
+        let array = [];
+
+        for (let i in data) {
+            if (data[i]._id === parseInt(value)) {
+                array = data[i].array;
+            }
+        }
+
+        return array;
     }
 
     return(

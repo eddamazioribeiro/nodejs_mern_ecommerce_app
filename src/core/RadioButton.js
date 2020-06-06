@@ -1,10 +1,11 @@
 import React, { useState, useEffect, Fragment } from 'react';
 
-const RadioButton = ({prices}) => {
+const RadioButton = ({prices, handleFilters}) => {
     const [value, setValue] = useState(0);
 
-    const handleChange = () => {
-
+    const handleChange = (event) => {
+        handleFilters(event.target.value);
+        setValue(event.target.value);
     }
 
     return prices.map((p, i) => {
