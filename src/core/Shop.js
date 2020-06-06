@@ -4,6 +4,7 @@ import Checkbox from './Checkbox';
 import RadioButton from './RadioButton';
 import {getCategories, getFilteredProducts} from './apiCore.js';
 import {prices} from './fixedPrices';
+import Card from './Card';
 
 const Shop = () => {
     const [myFilters, setMyFilters] = useState({
@@ -13,7 +14,7 @@ const Shop = () => {
     const [error, setError] = useState(false);
     const [limit, setLimit] = useState(6);
     const [skip, setSkip] = useState(0);
-    const [filteredResult, setFilteredResult] = useState(0);
+    const [filteredResult, setFilteredResult] = useState([]);
 
     const init = () => {
         getCategories()
@@ -64,8 +65,8 @@ const Shop = () => {
             if (data.error) {
                 setError(data.error);
             } else {
-                console.log(data);
-                setFilteredResult(data);
+                console.log(data.products);
+                setFilteredResult(data.products);
             }            
         })
     }
@@ -94,9 +95,17 @@ const Shop = () => {
                             }}/>
                     </div>                    
                 </div>
-                <div className="col-8">
-                    <h4>Teste data</h4>
-                    {JSON.stringify(filteredResult)}
+                <div className='col-8'>
+                    <h2 className='mb-4'>
+                        Products
+                    </h2>
+                    <div className='row'>
+                        {filteredResult.map((product, i) => (
+                            <Card
+                                key={i}
+                                product={product}/>
+                        ))}
+                    </div>
                 </div>                
             </div>
         </Layout>
