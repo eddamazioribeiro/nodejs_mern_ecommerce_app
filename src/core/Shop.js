@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Layout from './Layout';
 import Checkbox from './Checkbox';
 import RadioButton from './RadioButton';
-import {getCategories} from './apiCore.js';
+import {getCategories, getFilteredProducts} from './apiCore.js';
 import {prices} from './fixedPrices';
 
 const Shop = () => {
@@ -11,6 +11,9 @@ const Shop = () => {
     });
     const [categories, setCategories] = useState([]);
     const [error, setError] = useState(false);
+    const [limit, setLimit] = useState(6);
+    const [skip, setSkip] = useState(0);
+    const [filteredResult, setFilteredResult] = useState(0);
 
     const init = () => {
         getCategories()
@@ -25,7 +28,21 @@ const Shop = () => {
 
     useEffect(() => {
         init();
+        loadFilteredResult(skip, limit, myFilters.filters);
     }, []);
+
+    const handlePrice = value => {
+        const data = prices;
+        let range = [];
+
+        for (let i in data) {
+            if (data[i]._id === parseInt(value)) {
+                range = data[i].priceRange;
+            }
+        }
+
+        return range;
+    }
 
     const handleFilters = (filters, filterBy) => {
         const newFilters = {...myFilters};
@@ -36,20 +53,21 @@ const Shop = () => {
             newFilters.filters[filterBy] = priceValues;
         }
 
+        loadFilteredResult(myFilters.filters);
+
         setMyFilters(newFilters);
     }
 
-    const handlePrice = value => {
-        const data = prices;
-        let array = [];
-
-        for (let i in data) {
-            if (data[i]._id === parseInt(value)) {
-                array = data[i].array;
-            }
-        }
-
-        return array;
+    const loadFilteredResult = (newFilters) => {
+        getFilteredProducts(skip, limit, newFilters)
+        .then(data => {
+            if (data.error) {
+                setError(data.error);
+            } else {
+                console.log(data);
+                setFilteredResult(data);
+            }            
+        })
     }
 
     return(
@@ -77,7 +95,8 @@ const Shop = () => {
                     </div>                    
                 </div>
                 <div className="col-8">
-                    {JSON.stringify(myFilters)}
+                    <h4>Teste data</h4>
+                    {JSON.stringify(filteredResult)}
                 </div>                
             </div>
         </Layout>
