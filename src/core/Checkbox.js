@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Checkbox = ({ categoties, handleFilters }) => {
+const Checkbox = ({ categories, handleFilters }) => {
     const [checked, setChecked] = useState([]);
 
     const handleToggle = c => () => {
@@ -17,7 +17,7 @@ const Checkbox = ({ categoties, handleFilters }) => {
         handleFilters(newCheckedCategoryId);
     }
 
-    return categoties.map((c, i) => {
+    return categories.map((c, i) => {
         return (
             <li key={i}
                 className='list-unstyled'>

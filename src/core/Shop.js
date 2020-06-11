@@ -112,7 +112,7 @@ const Shop = () => {
                     <h4>Categories</h4>
                     <ul>
                         <Checkbox
-                            categoties={categories}
+                            categories={categories}
                             handleFilters={filters => {
                                 handleFilters(filters, 'category')
                             }}/>
