@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Layout from '../core/Layout';
 import Card from './Card';
+import Search from './Search';
 import {getProducts} from './apiCore';
 
 const Home = () => {
@@ -35,6 +36,7 @@ const Home = () => {
             title='Home Page'
             description='Node React E-commerce App'
             className='container-fluid'>
+            <Search />
             <h2 className='mb-4'>
                 New arrivals
             </h2>           
