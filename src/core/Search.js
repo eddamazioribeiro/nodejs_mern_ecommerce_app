@@ -65,6 +65,20 @@ const Search = () => {
         });
     }
 
+    const searchedProducts = (results = []) => {
+        console.log('qtd. prod', results.length);
+        
+        return(
+            <div className='row'>
+                {results.map((p, i) => (
+                    <Card
+                        key={i}
+                        product={p}/>
+                ))}
+            </div>
+        );
+    }
+
     const searchForm = () => {
         return (
             <form onSubmit={searchSubmit}>
@@ -105,9 +119,12 @@ const Search = () => {
 
     return (
         <div className='row'>
-            <div className='container mb-3'>
+            <div className='container-fluid mb-3'>
                 {searchForm()}
-                {JSON.stringify(results)}
+            </div>
+            <div className='container-fluid mb-3'>
+                {(results.length > 0) ? (<h2>Seach result</h2>) : ''}
+                {searchedProducts(results)}
             </div>
         </div>
     );
