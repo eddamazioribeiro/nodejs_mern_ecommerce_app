@@ -16,10 +16,8 @@ const Home = () => {
                 setError(data.error);
             } else {
                 if (sortBy == 'sold') {
-                    console.log('sold');
                     setProductsBySell(data);
                 } else {
-                    console.log('arrival');
                     setProductsByArrival(data);
                 }
             }

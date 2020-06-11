@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
-import { getCategories } from './apiCore';
+import { getCategories, list } from './apiCore';
 
 const Search = () => {
     const [data, setData] = useState({
@@ -21,24 +21,48 @@ const Search = () => {
 
     useEffect(() => {
         loadCategories();
-    });
+    }, []);
 
     const loadCategories = () => {
-        getCategories().then(data => {
-            if (data.error) {
-                console.log(data.error)
+        getCategories().then(res => {
+            if (res.error) {
+                console.log(res.error)
             } else {
-                setData({ ...data, categories: data });
+                setData({...data, categories: res});
             }
         })
     }
 
-    const searchSubmit = () => {
-        // code here
+    const searchdata = () => {
+        if (search) {
+            list({
+                search: search || undefined,
+                category: category
+            })
+            .then(res => {
+                if (res.error) {
+                    console.log(res.error);
+                } else {
+                    setData({...data,
+                        results: res,
+                        searched: true
+                    });
+                }
+            });
+        }
     }
 
-    const handleChange = () => {
-        // code here
+    const searchSubmit = (e) => {
+        e.preventDefault();
+
+        searchdata();
+    }
+
+    const handleChange = name => event => {
+        setData({...data,
+            [name]: event.target.value,
+            searched: false
+        });
     }
 
     const searchForm = () => {
@@ -81,8 +105,9 @@ const Search = () => {
 
     return (
         <div className='row'>
-            <div className='container'>
+            <div className='container mb-3'>
                 {searchForm()}
+                {JSON.stringify(results)}
             </div>
         </div>
     );
