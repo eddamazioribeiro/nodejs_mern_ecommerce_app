@@ -18,15 +18,18 @@ const Product = (props) => {
             if (data.error) {
                 setError(data.error);
             } else {
-                setProduct(data);
+                setProduct(data.product);
             }
         });
     }
 
     return(
         <Layout
-            title='Home Page'
-            description='Node React E-commerce App'
+            title={product && product.name}
+            description={
+                product
+                && product.description
+                && product.description.substring(0, 100)}
             className='container-fluid'>
             <h2 className='mb-4'>Single Product</h2>
             <div className='row'>
