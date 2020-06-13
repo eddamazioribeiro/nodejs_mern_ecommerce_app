@@ -65,17 +65,36 @@ const Search = () => {
         });
     }
 
+    const searchMessage = (searched, products) => {
+        let prodsQty = products.length || 0;
+        let message = '';
+
+        if (searched) {
+            if (prodsQty > 0) {
+                message = `Found ${prodsQty} products`;
+            } else {
+                message = 'No products found';
+            }
+        }
+
+        return message;
+    }
+
     const searchedProducts = (results = []) => {
-        console.log('qtd. prod', results.length);
-        
         return(
-            <div className='row'>
-                {results.map((p, i) => (
-                    <Card
-                        key={i}
-                        product={p}/>
-                ))}
+            <div>
+                <h2 className='mt-4 bm-4'>
+                    {searchMessage(searched, results)}
+                </h2>
+                <div className='row'>
+                    {results.map((p, i) => (
+                        <Card
+                            key={i}
+                            product={p}/>
+                    ))}
+                </div>
             </div>
+
         );
     }
 
@@ -88,7 +107,7 @@ const Search = () => {
                             <select
                                 className='btn mr-2'
                                 onChange={handleChange('category')}>
-                                <option value="All">Pick Category</option>
+                                <option value="All">All</option>
                                 {categories.map((c, i) => (
                                     <option
                                         key={i}
@@ -123,7 +142,6 @@ const Search = () => {
                 {searchForm()}
             </div>
             <div className='container-fluid mb-3'>
-                {(results.length > 0) ? (<h2>Seach result</h2>) : ''}
                 {searchedProducts(results)}
             </div>
         </div>
