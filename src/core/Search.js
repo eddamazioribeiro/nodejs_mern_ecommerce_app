@@ -34,7 +34,7 @@ const Search = () => {
     }
 
     const searchdata = () => {
-        if (search) {
+        if (search || category) {
             list({
                 search: search || undefined,
                 category: category
@@ -88,9 +88,11 @@ const Search = () => {
                 </h2>
                 <div className='row'>
                     {results.map((p, i) => (
-                        <Card
-                            key={i}
-                            product={p}/>
+                        <div className='col-4 mb-3'>
+                            <Card
+                                key={i}
+                                product={p}/>
+                        </div>
                     ))}
                 </div>
             </div>

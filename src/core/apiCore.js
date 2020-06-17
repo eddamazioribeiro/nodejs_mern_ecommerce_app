@@ -15,7 +15,6 @@ export const getProducts = (sortBy) => {
 
 export const list = (params) => {
     const query = queryString.stringify(params);
-    console.log('query', query);
 
     return fetch(`${API}/products/search?${query}`, {
         method: "GET"
@@ -45,8 +44,6 @@ export const getCategories = () => {
 export const getFilteredProducts = (skip, limit, filters ={}) => {
     const data ={limit, skip, filters};
     
-    console.log(JSON.stringify(data));
-
     return fetch(`${API}/products/by/search`, {
         method: "POST",
         headers: {
