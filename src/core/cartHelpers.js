@@ -1,3 +1,34 @@
+export const getCart = () => {
+    let cart = [];
+    
+    if (typeof window !== 'undefined') {
+        if (localStorage.getItem('cart')) {
+            cart = JSON.parse(localStorage.getItem('cart'));
+        }
+    }
+
+    return cart;
+}
+
+export const updateItem = (productId, count) => {
+    let cart = [];
+    
+    if (typeof window !== 'undefined') {
+        if (localStorage.getItem('cart')) {
+            cart = JSON.parse(localStorage.getItem('cart'));
+        }
+
+        cart.map((p, i) => {
+            if (p._id === productId) {
+                cart[i].count = count;
+            }
+        });
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+}
+
 export const addItem = (item, next) => {
     let cart = [];
 
@@ -29,16 +60,4 @@ export const itemTotal = () => {
     }
 
     return 0;
-}
-
-export const getCart = () => {
-    let cart = [];
-    
-    if (typeof window !== 'undefined') {
-        if (localStorage.getItem('cart')) {
-            cart = JSON.parse(localStorage.getItem('cart'));
-        }
-    }
-
-    return cart;
 }
