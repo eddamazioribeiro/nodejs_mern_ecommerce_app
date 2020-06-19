@@ -4,23 +4,11 @@ import {Link, Redirect} from 'react-router-dom';
 import ShowImage from './ShowImage';
 import {addItem} from './cartHelpers';
 
-const Card = ({product, showViewProductButton = true}) => {
+const Card = ({
+        product,
+        showViewProduct = true,
+        showAddToCart = true}) => {
     const [redirect, setRedirect] = useState(false);
-
-    const showViewButton = (showViewProductButton) => {
-        return(
-            showViewProductButton &&(
-                <Link
-                    to={`/product/${product._id}`}
-                    className='mr-2'>
-                    <button
-                        className='btn btn-outline-primary mt-2 mb-2'>
-                            View product
-                    </button>
-                </Link>
-            )              
-        );
-    }
 
     const addToCart = () => {
         addItem(product, () => {
@@ -36,15 +24,32 @@ const Card = ({product, showViewProductButton = true}) => {
         }
     }
 
-    const showAddToCartButton = () => {
+    const showViewButton = (showViewProduct) => {
         return(
-            <button
-                onClick={() => {
-                    addToCart()
-                }}            
-                className='btn btn-outline-warning mt-2 mb-2'>
-                Add to cart
-            </button>  
+            showViewProduct &&(
+                <Link
+                    to={`/product/${product._id}`}
+                    className='mr-2'>
+                    <button
+                        className='btn btn-outline-primary mt-2 mb-2'>
+                            View product
+                    </button>
+                </Link>
+            )              
+        );
+    }    
+
+    const showAddToCartButton = (showAddToCartButton) => {
+        return(
+            showAddToCart &&(
+                <button
+                    onClick={() => {
+                        addToCart()
+                    }}            
+                    className='btn btn-outline-warning mt-2 mb-2'>
+                    Add to cart
+                </button>                  
+            )
         );
     }
 
@@ -82,8 +87,8 @@ const Card = ({product, showViewProductButton = true}) => {
                 </p>
                 {showStock(product.quantity)}
                 <br/>             
-                {showViewButton(showViewProductButton)}               
-                {showAddToCartButton()}            
+                {showViewButton(showViewProduct)}               
+                {showAddToCartButton(showAddToCart)}            
             </div>
         </div>
 
