@@ -30,3 +30,15 @@ export const itemTotal = () => {
 
     return 0;
 }
+
+export const getCart = () => {
+    let cart = [];
+    
+    if (typeof window !== 'undefined') {
+        if (localStorage.getItem('cart')) {
+            cart = JSON.parse(localStorage.getItem('cart'));
+        }
+    }
+
+    return cart;
+}
