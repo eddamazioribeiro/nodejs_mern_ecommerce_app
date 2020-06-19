@@ -11,10 +11,9 @@ const Card = ({product, showViewProductButton = true}) => {
         return(
             showViewProductButton &&(
                 <Link
-                to={`/product/${product._id}`}
-                className='mr-2'>
+                    to={`/product/${product._id}`}
+                    className='mr-2'>
                     <button
-                        onClick={() => (addToCart())}
                         className='btn btn-outline-primary mt-2 mb-2'>
                             View product
                     </button>
@@ -39,8 +38,12 @@ const Card = ({product, showViewProductButton = true}) => {
 
     const showAddToCartButton = () => {
         return(
-            <button className='btn btn-outline-warning mt-2 mb-2'>
-                Added to cart
+            <button
+                onClick={() => {
+                    addToCart()
+                }}            
+                className='btn btn-outline-warning mt-2 mb-2'>
+                Add to cart
             </button>  
         );
     }
