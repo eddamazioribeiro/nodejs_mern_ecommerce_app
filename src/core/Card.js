@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import moment from 'moment';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import ShowImage from './ShowImage';
+import {addItem} from './cartHelpers';
 
 const Card = ({product, showViewProductButton = true}) => {
+    const [redirect, setRedirect] = useState(false);
+
     const showViewButton = (showViewProductButton) => {
         return(
             showViewProductButton &&(
@@ -11,6 +14,7 @@ const Card = ({product, showViewProductButton = true}) => {
                 to={`/product/${product._id}`}
                 className='mr-2'>
                     <button
+                        onClick={() => (addToCart())}
                         className='btn btn-outline-primary mt-2 mb-2'>
                             View product
                     </button>
@@ -19,11 +23,25 @@ const Card = ({product, showViewProductButton = true}) => {
         );
     }
 
+    const addToCart = () => {
+        addItem(product, () => {
+            setRedirect(false);
+        });
+    }
+
+    const shouldRedirect = (redirect) => {
+        if (redirect) {
+            return(
+                <Redirect to='/cart'/>
+            );
+        }
+    }
+
     const showAddToCartButton = () => {
         return(
-            <p className='btn btn-outline-warning mt-2 mb-2'>
+            <button className='btn btn-outline-warning mt-2 mb-2'>
                 Added to cart
-            </p>  
+            </button>  
         );
     }
 
@@ -46,6 +64,7 @@ const Card = ({product, showViewProductButton = true}) => {
             </div>
             <div
                 className='card-body'>
+                {shouldRedirect(redirect)}
                 <ShowImage
                     item={product}
                     url="product"/>
