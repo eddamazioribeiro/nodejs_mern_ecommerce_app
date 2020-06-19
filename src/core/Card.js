@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 import moment, { updateLocale } from 'moment';
 import {Link, Redirect} from 'react-router-dom';
 import ShowImage from './ShowImage';
-import {addItem, updateItem} from './cartHelpers';
+import {addItem, updateItem, removeItem} from './cartHelpers';
 
 const Card = ({
         product,
         showViewProduct = true,
         showAddToCart = true,
+        showRemoveProduct = false,
         cartUpdate = false}) => {
 
     const [redirect, setRedirect] = useState(false);
@@ -51,6 +52,21 @@ const Card = ({
                     }}            
                     className='btn btn-outline-warning mt-2 mb-2'>
                     Add to cart
+                </button>                  
+            )
+        );
+    }
+
+    const showRemoveProductButton = (showRemoveProduct) => {
+        return(
+            showRemoveProduct &&(
+                <button
+                    onClick={() => {
+                        console.log('remove', product._id);
+                        removeItem(product._id)
+                    }}            
+                    className='btn btn-outline-danger mt-2 mb-2'>
+                    Remove
                 </button>                  
             )
         );
@@ -120,6 +136,7 @@ const Card = ({
                 <br/>             
                 {showViewButton(showViewProduct)}               
                 {showAddToCartButton(showAddToCart)}
+                {showRemoveProductButton(showRemoveProduct)}
                 {showCartUpdateOptions(cartUpdate)}          
             </div>
         </div>

@@ -10,6 +10,12 @@ export const getLocalStorageItem = (itemName) => {
     return item;
 }
 
+export const setLocalStorageItem = (itemName, object) => {
+    let item = JSON.stringify(object);
+
+    localStorage.setItem(itemName, item);
+}
+
 export const getCart = () => {
     let cart = getLocalStorageItem('cart');
 
@@ -26,7 +32,7 @@ export const updateItem = (productId, count) => {
             }
         });
     
-        localStorage.setItem('cart', JSON.stringify(cart));
+        setLocalStorageItem('cart', cart);
     }
 }
 
@@ -43,7 +49,7 @@ export const addItem = (item, next) => {
                 return cart.find(p => p._id === id);
             });
     
-        localStorage.setItem('cart', JSON.stringify(cart));
+        setLocalStorageItem('cart', cart);
     
         next();
     }
@@ -53,4 +59,20 @@ export const itemTotal = () => {
     let cartLength = getCart() ? getCart().length : 0;
 
     return cartLength;
+}
+
+export const removeItem = (productId) => {
+    let cart = getCart();
+
+    if (cart) {
+        cart.map((p, i) => {
+            if (p._id === productId) {
+                cart.splice(i, 1);
+            }
+        });
+    
+        setLocalStorageItem('cart', cart);
+    }
+
+    return cart;
 }

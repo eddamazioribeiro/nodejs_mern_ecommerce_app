@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Layout from '../core/Layout';
 import Card from './Card';
-import {getCart} from './cartHelpers';
+import {getCart, removeItem} from './cartHelpers';
 import {Link} from 'react-router-dom';
 
 const Cart = () => {
@@ -22,6 +22,7 @@ const Cart = () => {
                         key={i}
                         product={p}
                         showAddToCart={false}
+                        showRemoveProduct={true}
                         cartUpdate={true}/>
                     )
                 )}
