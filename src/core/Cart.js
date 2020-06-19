@@ -6,10 +6,12 @@ import {Link} from 'react-router-dom';
 
 const Cart = () => {
     const [items, setItems] = useState([]);
+    const [refresh, setRefresh] = useState(false);
     
     useEffect(() => {
         setItems(getCart());
-    }, []);
+        setRefresh(false);
+    }, [refresh]);
 
     const showItems = (items) => {
         return(
@@ -23,7 +25,10 @@ const Cart = () => {
                         product={p}
                         showAddToCart={false}
                         showRemoveProduct={true}
-                        cartUpdate={true}/>
+                        cartUpdate={true}
+                        refresh={(value = false) => {
+                            setRefresh(value);
+                        }}/>
                     )
                 )}
             </div>
@@ -34,6 +39,7 @@ const Cart = () => {
         return(
             <h2>
                 Your cart is empty.
+                <br/> 
                 <Link to='/shop'>
                     Continue shopping
                 </Link>

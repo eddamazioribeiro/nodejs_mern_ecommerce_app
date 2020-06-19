@@ -9,7 +9,8 @@ const Card = ({
         showViewProduct = true,
         showAddToCart = true,
         showRemoveProduct = false,
-        cartUpdate = false}) => {
+        cartUpdate = false,
+        refresh}) => {
 
     const [redirect, setRedirect] = useState(false);
     const [count, setCount] = useState(product.count);
@@ -43,7 +44,7 @@ const Card = ({
         );
     }    
 
-    const showAddToCartButton = (showAddToCartButton) => {
+    const showAddToCartButton = (showAddToCart) => {
         return(
             showAddToCart &&(
                 <button
@@ -62,8 +63,8 @@ const Card = ({
             showRemoveProduct &&(
                 <button
                     onClick={() => {
-                        console.log('remove', product._id);
-                        removeItem(product._id)
+                        removeItem(product._id);
+                        refresh(true);
                     }}            
                     className='btn btn-outline-danger mt-2 mb-2'>
                     Remove
