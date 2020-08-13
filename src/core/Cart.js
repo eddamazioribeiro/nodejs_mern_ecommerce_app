@@ -63,9 +63,7 @@ const Cart = () => {
                         <hr/>
                         <Checkout
                             products={items}
-                            refresh={(value = false) => {
-                                setRefresh(value)
-                            }}/>
+                            />
                     </h2>
                 </div>                
             </div>               
