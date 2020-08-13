@@ -56,9 +56,23 @@ const Checkout = ({products}) => {
         );
     }
 
+    const buy = () => {
+        let nonce;
+        let getNonce = data.instance.requestPaymentMethod()
+            .then(data => {
+                console.log(data);
+                nonce = data.nonce
+                console.log('Senda nonce and total to process: ', nonce, getTotal(products));
+            })
+            .catch(error => {
+                console.log('dropin error', error);
+                setData({...data, error: error.message});
+            });
+    }
+
     const showDropIn = () => {
         return(
-            <div>
+            <div onBlur={() => setData({...data, error: ''})}>
                 {data.clientToken !== null && data.clientToken !== '' && products.length > 0 ? (
                     <div>
                         <DropIn
@@ -66,20 +80,32 @@ const Checkout = ({products}) => {
                                 authorization: data.clientToken
                             }}
                             onInstance={(instance) => (data.instance = instance)}/>
-                            <button
-                                className='btn btn-success'>
-                                Checkout
-                            </button>
+                        <button
+                            className='btn btn-success'
+                            onClick={buy}>
+                            Pay
+                        </button>
                     </div>
                 ) : null}
             </div>
         );
     }
     
+    const showError = (error) => {
+        return(
+            <div 
+                className='alert alert-danger'
+                style={{display: error ? '' : 'none'}}>
+                {error}
+            </div>
+        );
+    }
+
     return(
         <div>
             <h2>
                 Total: ${getTotal()}
+                {showError(data.error)}
                 {showCheckout()}
             </h2>
         </div>
