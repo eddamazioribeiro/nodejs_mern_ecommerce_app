@@ -61,7 +61,11 @@ const Cart = () => {
                     <h2 className='mb-3'>
                         Your cart summary
                         <hr/>
-                        <Checkout products={items}/>
+                        <Checkout
+                            products={items}
+                            refresh={(value = false) => {
+                                setRefresh(value)
+                            }}/>
                     </h2>
                 </div>                
             </div>               
