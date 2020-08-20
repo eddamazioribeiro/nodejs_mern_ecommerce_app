@@ -95,7 +95,10 @@ const Checkout = ({products, refresh}) => {
                     <div>
                         <DropIn
                             options={{
-                                authorization: data.clientToken
+                                authorization: data.clientToken,
+                                paypal: {
+                                    flow: 'vault'
+                                }
                             }}
                             onInstance={(instance) => (data.instance = instance)}/>
                         <button
