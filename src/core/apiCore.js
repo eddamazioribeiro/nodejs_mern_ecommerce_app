@@ -124,3 +124,21 @@ export const processPayment = (userId, token, paymentData) => {
         console.log(err);
     });
 }
+
+export const createOrder = (userId, token, createdOrderData) => {
+    return fetch(`${API}/order/create/${userId}`, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({order: createdOrderData})
+    })
+    .then(res => {
+        return res.json();
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
