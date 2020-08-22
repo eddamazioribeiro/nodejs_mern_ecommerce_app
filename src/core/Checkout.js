@@ -15,6 +15,8 @@ const Checkout = ({products, refresh}) => {
         address: ''
     });
 
+    let deliveryAddress = data.address;
+
     useEffect(() => {
         getPaymentToken(userId, token);
     }, []);    
@@ -81,18 +83,21 @@ const Checkout = ({products, refresh}) => {
                         products: products,
                         transaction_id: response.transaction_id,
                         amount: response.transaction.amount,
-                        address: data.address
+                        address: deliveryAddress
                     };
                     
                     createOrder(userId, token, createOrderData);
 
-                    setData({...data, success: response.success});
                     emptyCart(() => {
                         refresh(true);
                         console.log('Successfully processed the payment and empty cart');
+
+                        setData({...data,
+                            loading: false,
+                            success: true
+                        });
                     });
 
-                    setData({...data, loading: false});
 
                 })
                 .catch(error => {
