@@ -12,6 +12,7 @@ import Home from './core/Home';
 import Shop from './core/Shop';
 import Product from './core/Product';
 import Cart from './core/Cart';
+import Orders from './admin/Orders';
 
 const Routes = () => {
     return(
@@ -45,7 +46,10 @@ const Routes = () => {
                 exact component={Product}/>
             <Route 
                 path='/cart'
-                exact component={Cart}/>                                                                                                           
+                exact component={Cart}/>
+            <AdminRoute 
+                path='/admin/orders'
+                exact component={Orders}/>                                                                                                                        
         </BrowserRouter>
     );
 };
