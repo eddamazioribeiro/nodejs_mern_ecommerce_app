@@ -50,7 +50,7 @@ const AdminDashboard = () => {
                         <Link
                             to='/admin/orders'
                             className='nav-link'>
-                                View orders
+                                View Orders
                         </Link>
                     </li>                    
                 </ul>
