@@ -43,6 +43,8 @@ export const updateUser = (user, next) => {
 
             auth.user = user;
             localStorage.setItem('jwt', JSON.stringify(auth));
+
+            next();
         }
     }
 }
