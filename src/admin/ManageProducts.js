@@ -41,6 +41,10 @@ const ManageProducts = () => {
             className='container-fluid'>
             <div className='row'>
                 <div className='col-12'>
+                    <h2 className='text-center'>
+                        Total {products.lenght} products
+                    </h2>
+                    <hr/>
                     <ul className='list-group'>
                         {products.map((prod, i) => {
                             return(
