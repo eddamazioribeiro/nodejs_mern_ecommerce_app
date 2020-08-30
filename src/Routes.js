@@ -7,6 +7,8 @@ import AdminRoute from './auth/AdminRoute';
 import Dashboard from './user/UserDashboard';
 import AdminDashboard from './user/AdminDashboard';
 import AddProduct from './admin/AddProduct';
+import UpdateProduct from './admin/UpdateProduct';
+import ManageProducts from './admin/ManageProducts';
 import AddCategory from './admin/AddCategory';
 import Home from './core/Home';
 import Shop from './core/Shop';
@@ -14,7 +16,6 @@ import Product from './core/Product';
 import Cart from './core/Cart';
 import Orders from './admin/Orders';
 import Profile from './user/Profile';
-import ManageProducts from './admin/ManageProducts';
 
 const Routes = () => {
     return(
@@ -57,7 +58,10 @@ const Routes = () => {
                 exact component={Profile}/>
             <AdminRoute 
                 path='/admin/products'
-                exact component={ManageProducts}/>                                                                                                                                                     
+                exact component={ManageProducts}/>
+            <AdminRoute 
+                path='/admin/product/update/:productId'
+                exact component={UpdateProduct}/>                                                                                                                                                                     
         </BrowserRouter>
     );
 };
